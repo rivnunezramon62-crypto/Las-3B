@@ -1,7 +1,7 @@
 /* ===== EDITA AQUÍ ===== */
 const NEGOCIO = {
   nombre: "Las 3B",
-  whatsapp: "53XXXXXXXX",   // código 53 + tu número, sin + ni espacios (ej. 5351234567)
+  whatsapp: "5363715998",   // código 53 + tu número, sin + ni espacios (ej. 5351234567)
   moneda: "$"
 };
 
