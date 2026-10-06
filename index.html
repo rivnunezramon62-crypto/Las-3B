@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IrisNoa web</title>
+<style>
+:root{--iris:#3B2E8F;--iris-d:#241A63;--lila:#E9E4FA;--mango:#FFB21E;--ink:#1B1830;--bg:#F8F6FD;--wa:#1B9E52;--mut:#6B6785}
+*{box-sizing:border-box;margin:0}
+body{font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--mango);outline-offset:2px}
+header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 16px;background:var(--iris-d);color:#fff;flex-wrap:wrap}
+.logo{font:700 20px Georgia,serif}
+.hb{display:flex;gap:8px;align-items:center;font-size:14px}
+.hb button{border:1px solid #ffffff80;background:none;color:#fff;border-radius:20px;padding:6px 14px}
+.hb .fill{background:var(--mango);color:var(--ink);border-color:var(--mango);font-weight:600}
+.hero{background:var(--iris-d)}
+.hero img{display:block;width:100%;height:auto;max-height:70vh;object-fit:cover}
+.cta{text-align:center;padding:14px}
+.cta a{display:inline-block;background:var(--mango);color:var(--ink);font-weight:700;padding:11px 26px;border-radius:26px;text-decoration:none}
+main{max-width:1100px;margin:0 auto;padding:18px 14px 40px}
+.cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px}
+.cats button{white-space:nowrap;border:1.5px solid var(--iris);background:#fff;color:var(--iris);border-radius:22px;padding:7px 14px}
+.cats button.on{background:var(--iris);color:#fff}
+.bar{display:grid;grid-template-columns:1fr;gap:8px;margin:10px 0 16px}
+@media(min-width:640px){.bar{grid-template-columns:2fr 1fr 1fr}}
+.bar input,.bar select{width:100%;padding:10px 12px;border:1.5px solid #CFC8EA;border-radius:10px;background:#fff}
+.info{color:var(--mut);font-size:14px;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid #E3DEF5;text-align:left;padding:0;display:flex;flex-direction:column}
+.card:hover{border-color:var(--iris)}
+.media{position:relative;aspect-ratio:1;background:var(--lila);display:grid;place-items:center;font-size:44px}
+.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card .t{padding:10px 12px 2px;font-weight:600;font-size:15px;line-height:1.3}
+.card .pr{padding:0 12px 12px;color:var(--iris);font:700 17px Georgia,serif}
+.pg{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.pg button{min-width:40px;padding:8px 12px;border:1.5px solid var(--iris);background:#fff;color:var(--iris);border-radius:10px}
+.pg button.on{background:var(--iris);color:#fff}
+.pg button:disabled{opacity:.4;cursor:default}
+.vacio{padding:40px 10px;text-align:center;color:var(--mut)}
+.ov{position:fixed;inset:0;background:#120C33CC;display:grid;place-items:center;padding:12px;z-index:10}
+.ov[hidden]{display:none}
+.box{background:#fff;border-radius:16px;max-width:560px;width:100%;max-height:92vh;overflow:auto;padding:18px;position:relative}
+.x{z-index:3;position:absolute;top:8px;right:10px;border:0;background:var(--lila);width:34px;height:34px;border-radius:50%;font-size:18px}
+.big{width:100%;aspect-ratio:1;background:var(--lila);border-radius:12px;display:grid;place-items:center;font-size:80px;overflow:hidden;position:relative;border:0;padding:0}
+.big img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.th{display:flex;gap:8px;margin:8px 0 12px}
+.th button{width:56px;height:56px;border-radius:8px;overflow:hidden;border:2px solid transparent;padding:0;background:var(--lila)}
+.th button.on{border-color:var(--iris)}
+.th img{width:100%;height:100%;object-fit:cover}
+.box h2{font:700 22px Georgia,serif;padding-right:40px}
+.box .pr{font:700 24px Georgia,serif;color:var(--iris);margin:4px 0 8px}
+.wa{width:100%;margin-top:14px;background:var(--wa);color:#fff;border:0;border-radius:12px;padding:13px;font-weight:700;font-size:17px}
+.nota{font-size:14px;color:var(--mut);margin-top:8px;text-align:center}
+.tabs{display:flex;gap:6px;margin:0 0 12px;padding-right:40px}
+.tabs button{flex:1;padding:8px;border:1.5px solid var(--iris);background:#fff;color:var(--iris);border-radius:10px;font-weight:600}
+.tabs button.on{background:var(--iris);color:#fff}
+.box label{display:block;margin:10px 0 4px;font-weight:600;font-size:14px}
+.box input{width:100%;padding:11px 12px;border:1.5px solid #CFC8EA;border-radius:10px}
+.go{width:100%;margin-top:14px;background:var(--iris);color:#fff;border:0;border-radius:12px;padding:12px;font-weight:700}
+.err{color:#B3261E;font-size:14px;margin-top:8px;min-height:1em}
+.lb{background:#000E;z-index:20}
+.lb img{max-width:100%;max-height:86vh;border-radius:8px}
+.lb .nav{position:absolute;top:50%;transform:translateY(-50%);background:#ffffffcc;border:0;border-radius:50%;width:44px;height:44px;font-size:22px}
+@media(prefers-reduced-motion:no-preference){.box{animation:in .18s ease-out}@keyframes in{from{transform:translateY(12px);opacity:.4}}}
+</style>
+</head>
+<body>
+<header>
+  <span class="logo" id="logo"></span>
+  <div class="hb" id="hb"></div>
+</header>
+
+<section class="hero"><img src="portada.webp" alt="Las 3B: la mejor opción para tu familia" width="1600" height="800"><div class="cta"><a href="#catalogo">Ver productos</a></div></section>
+
+<main id="catalogo">
+  <div class="cats" id="cats"></div>
+  <div class="bar">
+    <input id="q" type="search" placeholder="Buscar por nombre o categoría" aria-label="Buscar">
+    <select id="sort" aria-label="Ordenar por precio">
+      <option value="">Ordenar por precio</option>
+      <option value="asc">Menor a mayor</option>
+      <option value="desc">Mayor a menor</option>
+    </select>
+    <select id="per" aria-label="Productos por página">
+      <option value="12">Mostrar 12 productos</option>
+      <option value="24">Mostrar 24 productos</option>
+    </select>
+  </div>
+  <div class="info" id="info"></div>
+  <div class="grid" id="grid"></div>
+  <div class="pg" id="pg"></div>
+</main>
+
+<div class="ov" id="ovP" hidden><div class="box" id="boxP"></div></div>
+
+<div class="ov" id="ovA" hidden>
+  <div class="box">
+    <button class="x" data-close aria-label="Cerrar">×</button>
+    <div class="tabs"><button id="tReg">Registrarse</button><button id="tLog">Iniciar sesión</button></div>
+    <p id="aMsg" style="font-size:14px;color:var(--mut)"></p>
+    <div id="fReg">
+      <label for="rn">Tu nombre</label><input id="rn" autocomplete="name">
+      <label for="rt">Tu WhatsApp (con código de país)</label><input id="rt" type="tel" inputmode="tel" placeholder="Ej. 5351234567" autocomplete="tel">
+      <button class="go" id="bReg">Crear mi registro</button>
+    </div>
+    <div id="fLog" hidden>
+      <label for="lt">Tu WhatsApp</label><input id="lt" type="tel" inputmode="tel" placeholder="Ej. 5351234567">
+      <button class="go" id="bLog">Entrar</button>
+    </div>
+    <div class="err" id="aErr"></div>
+    <p style="font-size:12px;color:var(--mut);margin-top:6px">Tus datos se guardan solo en este dispositivo y se usan para armar tu mensaje de WhatsApp.</p>
+  </div>
+</div>
+
+<div class="ov lb" id="lb" hidden>
+  <button class="x" data-close aria-label="Cerrar">×</button>
+  <button class="nav" id="lbP" style="left:8px" aria-label="Anterior">‹</button>
+  <img id="lbI" alt="">
+  <button class="nav" id="lbN" style="right:8px" aria-label="Siguiente">›</button>
+</div>
+
+<script src="productos.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+const digits=s=>String(s).replace(/\D/g,'');
+const P=PRODUCTOS.map((p,i)=>({...p,i}));
+const cat=Object.fromEntries(CATEGORIAS.map(c=>[c.id,c]));
+const fotos=p=>(p.fotos&&p.fotos.length?p.fotos:(p.foto?[p.foto]:[])).slice(0,5);
+const src=f=>f;
+const money=n=>NEGOCIO.moneda+Number(n).toLocaleString('es');
+const ico=p=>(cat[p.categoria]||{}).icono||'🛍️';
+const get=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
+const put=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let st={cat:'',q:'',sort:'',per:12,page:1}, user=get('irisnoa_user'), pend=null, lbList=[], lbPos=0;
+
+document.title=NEGOCIO.nombre; $('#logo').textContent=NEGOCIO.nombre; 
+
+/* Encabezado */
+function header(){
+  $('#hb').innerHTML=user
+    ? `<span>Hola, ${esc(user.nombre.split(' ')[0])}</span><button id="out">Salir</button>`
+    : `<button id="hLog">Iniciar sesión</button><button class="fill" id="hReg">Registrarse</button>`;
+  if(user)$('#out').onclick=()=>{user=null;localStorage.removeItem('irisnoa_user');header()};
+  else{$('#hLog').onclick=()=>auth('log');$('#hReg').onclick=()=>auth('reg')}
+}
+
+/* Categorías */
+function cats(){
+  $('#cats').innerHTML=[{id:'',nombre:'Todas',icono:'✨'},...CATEGORIAS].map(c=>
+    `<button data-c="${c.id}" class="${st.cat===c.id?'on':''}">${c.icono} ${esc(c.nombre)}</button>`).join('');
+}
+$('#cats').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.cat=b.dataset.c;st.page=1;cats();render()};
+$('#q').oninput=e=>{st.q=e.target.value.trim();st.page=1;render()};
+$('#sort').onchange=e=>{st.sort=e.target.value;st.page=1;render()};
+$('#per').onchange=e=>{st.per=+e.target.value;st.page=1;render()};
+
+/* Lista */
+function render(){
+  let r=P.filter(p=>(!st.cat||p.categoria===st.cat)&&(!st.q||norm(p.nombre+' '+(cat[p.categoria]||{}).nombre).includes(norm(st.q))));
+  if(st.sort)r.sort((a,b)=>st.sort==='asc'?a.precio-b.precio:b.precio-a.precio);
+  const pages=Math.max(1,Math.ceil(r.length/st.per)); if(st.page>pages)st.page=pages;
+  const ini=(st.page-1)*st.per, vis=r.slice(ini,ini+st.per);
+  $('#info').textContent=r.length?`${r.length} producto${r.length>1?'s':''} · mostrando ${ini+1} a ${ini+vis.length}`:'';
+  $('#grid').innerHTML=vis.length?vis.map(p=>{const f=fotos(p)[0];
+    return `<button class="card" data-i="${p.i}"><span class="media">${ico(p)}${f?`<img loading="lazy" src="${esc(src(f))}" alt="${esc(p.nombre)}" onerror="this.style.display='none'">`:''}</span><span class="t">${esc(p.nombre)}</span><span class="pr">${money(p.precio)}</span></button>`}).join('')
+    :'<div class="vacio" style="grid-column:1/-1">No encontramos productos con esa búsqueda. Prueba otra palabra o elige "Todas".</div>';
+  let h='';
+  if(pages>1){h=`<button data-p="${st.page-1}" ${st.page<2?'disabled':''}>Anterior</button>`;
+    for(let i=1;i<=pages;i++)h+=`<button data-p="${i}" class="${i===st.page?'on':''}">${i}</button>`;
+    h+=`<button data-p="${st.page+1}" ${st.page>=pages?'disabled':''}>Siguiente</button>`}
+  $('#pg').innerHTML=h;
+}
+$('#pg').onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;st.page=+b.dataset.p;render();$('#catalogo').scrollIntoView()};
+$('#grid').onclick=e=>{const b=e.target.closest('.card');if(b)producto(+b.dataset.i)};
+
+/* Producto */
+function producto(i){
+  const p=P[i], f=fotos(p);
+  $('#boxP').innerHTML=`<button class="x" data-close aria-label="Cerrar">×</button>
+    <button class="big" id="big" aria-label="Ampliar foto">${ico(p)}</button>
+    <div class="th" id="th">${f.map((x,k)=>`<button data-k="${k}" class="${k?'':'on'}" aria-label="Foto ${k+1}"><img src="${esc(src(x))}" alt=""></button>`).join('')}</div>
+    <h2>${esc(p.nombre)}</h2><div class="pr">${money(p.precio)}</div>
+    <p>${esc(p.descripcion||'')}</p>
+    <button class="wa" id="wa">Contacto WhatsApp</button>
+    <p class="nota">Si quieres comprar o aclarar, selecciona WhatsApp.</p>`;
+  const show=k=>{$('#big').innerHTML=f.length?`<img src="${esc(src(f[k]))}" alt="${esc(p.nombre)}" onerror="this.style.display='none'">`:ico(p);
+    $('#big').dataset.k=k;document.querySelectorAll('#th button').forEach((b,j)=>b.classList.toggle('on',j===k))};
+  show(0);
+  $('#th').onclick=e=>{const b=e.target.closest('button');if(b)show(+b.dataset.k)};
+  $('#big').onclick=()=>{if(f.length)lightbox(f.map(src),+$('#big').dataset.k)};
+  $('#wa').onclick=()=>{if(!user){pend=i;auth('reg','Para escribirnos por WhatsApp, primero regístrate una sola vez.')}else enviar(i)};
+  $('#ovP').hidden=false;
+}
+function enviar(i){
+  const p=P[i];
+  if(/x/i.test(NEGOCIO.whatsapp)){alert('Falta poner el número de WhatsApp del negocio en productos.js');return}
+  const msg=`Hola, soy ${user.nombre} (WhatsApp ${user.tel}). Me interesa este producto: ${p.nombre} (${money(p.precio)}). Quiero comprarlo o aclarar algunas dudas.`;
+  window.open(`https://wa.me/${digits(NEGOCIO.whatsapp)}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+/* Fotos ampliadas */
+function lightbox(l,k){lbList=l;lbPos=k;lbShow();$('#lb').hidden=false}
+function lbShow(){$('#lbI').src=lbList[lbPos];$('#lbP').hidden=$('#lbN').hidden=lbList.length<2}
+$('#lbP').onclick=()=>{lbPos=(lbPos+lbList.length-1)%lbList.length;lbShow()};
+$('#lbN').onclick=()=>{lbPos=(lbPos+1)%lbList.length;lbShow()};
+
+/* Registro e ingreso */
+function auth(tab,msg){
+  $('#aMsg').textContent=msg||'';$('#aErr').textContent='';
+  $('#tReg').classList.toggle('on',tab==='reg');$('#tLog').classList.toggle('on',tab==='log');
+  $('#fReg').hidden=tab!=='reg';$('#fLog').hidden=tab!=='log';$('#ovA').hidden=false;
+}
+$('#tReg').onclick=()=>auth('reg');$('#tLog').onclick=()=>auth('log');
+function entrar(u){
+  user=u;put('irisnoa_user',u);header();$('#ovA').hidden=true;
+  if(pend!==null){const i=pend;pend=null;enviar(i)}
+}
+$('#bReg').onclick=()=>{
+  const n=$('#rn').value.trim(),t=digits($('#rt').value);
+  if(n.length<2)return $('#aErr').textContent='Escribe tu nombre.';
+  if(t.length<8||t.length>15)return $('#aErr').textContent='Escribe tu WhatsApp con código de país, solo números (ej. 5351234567).';
+  const us=get('irisnoa_users')||[];const u={nombre:n,tel:t};
+  put('irisnoa_users',[...us.filter(x=>x.tel!==t),u]);entrar(u);
+};
+$('#bLog').onclick=()=>{
+  const t=digits($('#lt').value),u=(get('irisnoa_users')||[]).find(x=>x.tel===t);
+  if(u)entrar(u);else $('#aErr').textContent='Ese número no está registrado en este dispositivo. Usa "Registrarse".';
+};
+
+/* Cerrar ventanas */
+document.addEventListener('click',e=>{
+  if(e.target.closest('[data-close]')||e.target.classList.contains('ov')){
+    const lb=!$('#lb').hidden;
+    if(lb)$('#lb').hidden=true;else{$('#ovP').hidden=$('#ovA').hidden=true;pend=null}
+  }
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#lb').hidden=true;$('#ovP').hidden=true;$('#ovA').hidden=true}});
+
+header();cats();render();
+</script>
+</body>
+</html>
