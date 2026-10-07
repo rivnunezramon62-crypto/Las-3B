@@ -12,7 +12,7 @@ button,input,select{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:3px solid var(--mango);outline-offset:2px}
 header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 16px;background:var(--iris-d);color:#fff;flex-wrap:wrap}
-.logo{font:700 20px Georgia,serif}
+.logo{font:700 20px Georgia,serif;background:none;border:0;color:#fff;padding:0;cursor:pointer}
 .hb{display:flex;gap:8px;align-items:center;font-size:14px}
 .hb button{border:1px solid #ffffff80;background:none;color:#fff;border-radius:20px;padding:6px 14px}
 .hb .fill{background:var(--mango);color:var(--ink);border-color:var(--mango);font-weight:600}
@@ -69,7 +69,7 @@ main{max-width:1100px;margin:0 auto;padding:18px 14px 40px}
 </head>
 <body>
 <header>
-  <span class="logo" id="logo"></span>
+  <button class="logo" id="logo" aria-label="Ir al inicio"></button>
   <div class="hb" id="hb"></div>
 </header>
 
@@ -159,6 +159,10 @@ $('#q').oninput=e=>{st.q=e.target.value.trim();st.page=1;render()};
 $('#sort').onchange=e=>{st.sort=e.target.value;st.page=1;render()};
 $('#per').onchange=e=>{st.per=+e.target.value;st.page=1;render()};
 
+/* Volver al inicio */
+function inicio(){st={cat:'',q:'',sort:'',per:st.per,page:1};$('#q').value='';$('#sort').value='';cats();render();window.scrollTo({top:0,behavior:'smooth'})}
+$('#logo').onclick=inicio;
+
 /* Lista */
 function render(){
   let r=P.filter(p=>(!st.cat||p.categoria===st.cat)&&(!st.q||norm(p.nombre+' '+(cat[p.categoria]||{}).nombre).includes(norm(st.q))));
@@ -168,7 +172,7 @@ function render(){
   $('#info').textContent=r.length?`${r.length} producto${r.length>1?'s':''} · mostrando ${ini+1} a ${ini+vis.length}`:'';
   $('#grid').innerHTML=vis.length?vis.map(p=>{const f=fotos(p)[0];
     return `<button class="card" data-i="${p.i}"><span class="media">${ico(p)}${f?`<img loading="lazy" src="${esc(src(f))}" alt="${esc(p.nombre)}" onerror="this.style.display='none'">`:''}</span><span class="t">${esc(p.nombre)}</span><span class="pr">${money(p.precio)}</span></button>`}).join('')
-    :'<div class="vacio" style="grid-column:1/-1">No encontramos productos con esa búsqueda. Prueba otra palabra o elige "Todas".</div>';
+    :'<div class="vacio" style="grid-column:1/-1">No encontramos productos con esa búsqueda. Prueba otra palabra o elige "Todas".<br><button class="go" id="all" style="max-width:280px">Ver todos los productos</button></div>';
   let h='';
   if(pages>1){h=`<button data-p="${st.page-1}" ${st.page<2?'disabled':''}>Anterior</button>`;
     for(let i=1;i<=pages;i++)h+=`<button data-p="${i}" class="${i===st.page?'on':''}">${i}</button>`;
@@ -176,7 +180,7 @@ function render(){
   $('#pg').innerHTML=h;
 }
 $('#pg').onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;st.page=+b.dataset.p;render();$('#catalogo').scrollIntoView()};
-$('#grid').onclick=e=>{const b=e.target.closest('.card');if(b)producto(+b.dataset.i)};
+$('#grid').onclick=e=>{if(e.target.closest('#all'))return inicio();const b=e.target.closest('.card');if(b)producto(+b.dataset.i)};
 
 /* Producto */
 function producto(i){
